@@ -5,8 +5,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
+	wampprotocapnp "github.com/xconnio/wampproto-capnproto/go"
 	"github.com/xconnio/wampproto-go/messages"
-	wampprotocapnp "github.com/xconnio/wampproto-serializer-capnproto/go"
 )
 
 func TestHello(t *testing.T) {

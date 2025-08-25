@@ -1,4 +1,4 @@
-module github.com/xconnio/wampproto-serializer-capnproto/go
+module github.com/xconnio/wampproto-capnproto/go
 
 go 1.23.0
 
