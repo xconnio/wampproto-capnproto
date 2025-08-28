@@ -52,7 +52,7 @@ class PublishFields(IPublishFields):
         return self._ex.payload
 
     @property
-    def payload_serializer_id(self) -> int:
+    def payload_serializer(self) -> int:
         return self._gen.payloadSerializerID
 
 

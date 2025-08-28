@@ -35,7 +35,7 @@ class AbortFields(IAbortFields):
         return self._ex.kwargs
 
     @property
-    def payload_serializer_id(self) -> bytes:
+    def payload_serializer(self) -> int:
         return self._gen.payloadSerializerID
 
     @property
