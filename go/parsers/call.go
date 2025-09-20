@@ -38,7 +38,16 @@ func (c *Call) KwArgs() map[string]any {
 }
 
 func (c *Call) Options() map[string]any {
-	return map[string]any{}
+	var options map[string]any
+	if c.gen.ReceiveProgress() {
+		setDetail(&options, "receive_progress", c.gen.ReceiveProgress())
+	}
+
+	if c.gen.Progress() {
+		setDetail(&options, "progress", c.gen.Progress())
+	}
+
+	return options
 }
 
 func (c *Call) PayloadIsBinary() bool {
@@ -71,6 +80,16 @@ func CallToCapnproto(m *messages.Call) ([]byte, error) {
 
 	payloadSerializer := selectPayloadSerializer(m.Options())
 	call.SetPayloadSerializerID(payloadSerializer)
+
+	receiveProgress, ok := m.Options()["receive_progress"].(bool)
+	if ok {
+		call.SetReceiveProgress(receiveProgress)
+	}
+
+	progress, ok := m.Options()["progress"].(bool)
+	if ok {
+		call.SetProgress(progress)
+	}
 
 	var payload []byte
 	if m.PayloadIsBinary() {

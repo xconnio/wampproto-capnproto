@@ -13,12 +13,12 @@ type Call capnp.Struct
 const Call_TypeID = 0xac3d3f012fe6497c
 
 func NewCall(s *capnp.Segment) (Call, error) {
-	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 16, PointerCount: 1})
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 24, PointerCount: 1})
 	return Call(st), err
 }
 
 func NewRootCall(s *capnp.Segment) (Call, error) {
-	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 16, PointerCount: 1})
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 24, PointerCount: 1})
 	return Call(st), err
 }
 
@@ -88,12 +88,28 @@ func (s Call) SetPayloadSerializerID(v uint64) {
 	capnp.Struct(s).SetUint64(8, v)
 }
 
+func (s Call) ReceiveProgress() bool {
+	return capnp.Struct(s).Bit(128)
+}
+
+func (s Call) SetReceiveProgress(v bool) {
+	capnp.Struct(s).SetBit(128, v)
+}
+
+func (s Call) Progress() bool {
+	return capnp.Struct(s).Bit(129)
+}
+
+func (s Call) SetProgress(v bool) {
+	capnp.Struct(s).SetBit(129, v)
+}
+
 // Call_List is a list of Call.
 type Call_List = capnp.StructList[Call]
 
 // NewCall creates a new list of Call.
 func NewCall_List(s *capnp.Segment, sz int32) (Call_List, error) {
-	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 16, PointerCount: 1}, sz)
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 24, PointerCount: 1}, sz)
 	return capnp.StructList[Call](l), err
 }
 

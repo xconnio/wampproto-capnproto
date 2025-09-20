@@ -13,12 +13,12 @@ type Invocation capnp.Struct
 const Invocation_TypeID = 0xcba85ac7b2406383
 
 func NewInvocation(s *capnp.Segment) (Invocation, error) {
-	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 32, PointerCount: 3})
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 40, PointerCount: 3})
 	return Invocation(st), err
 }
 
 func NewRootInvocation(s *capnp.Segment) (Invocation, error) {
-	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 32, PointerCount: 3})
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 40, PointerCount: 3})
 	return Invocation(st), err
 }
 
@@ -140,12 +140,28 @@ func (s Invocation) SetProcedure(v string) error {
 	return capnp.Struct(s).SetText(2, v)
 }
 
+func (s Invocation) ReceiveProgress() bool {
+	return capnp.Struct(s).Bit(256)
+}
+
+func (s Invocation) SetReceiveProgress(v bool) {
+	capnp.Struct(s).SetBit(256, v)
+}
+
+func (s Invocation) Progress() bool {
+	return capnp.Struct(s).Bit(257)
+}
+
+func (s Invocation) SetProgress(v bool) {
+	capnp.Struct(s).SetBit(257, v)
+}
+
 // Invocation_List is a list of Invocation.
 type Invocation_List = capnp.StructList[Invocation]
 
 // NewInvocation creates a new list of Invocation.
 func NewInvocation_List(s *capnp.Segment, sz int32) (Invocation_List, error) {
-	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 32, PointerCount: 3}, sz)
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 40, PointerCount: 3}, sz)
 	return capnp.StructList[Invocation](l), err
 }
 

@@ -13,12 +13,12 @@ type Result capnp.Struct
 const Result_TypeID = 0xe99a410370f42e83
 
 func NewResult(s *capnp.Segment) (Result, error) {
-	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 16, PointerCount: 0})
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 24, PointerCount: 0})
 	return Result(st), err
 }
 
 func NewRootResult(s *capnp.Segment) (Result, error) {
-	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 16, PointerCount: 0})
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 24, PointerCount: 0})
 	return Result(st), err
 }
 
@@ -70,12 +70,20 @@ func (s Result) SetPayloadSerializerID(v uint64) {
 	capnp.Struct(s).SetUint64(8, v)
 }
 
+func (s Result) Progress() bool {
+	return capnp.Struct(s).Bit(128)
+}
+
+func (s Result) SetProgress(v bool) {
+	capnp.Struct(s).SetBit(128, v)
+}
+
 // Result_List is a list of Result.
 type Result_List = capnp.StructList[Result]
 
 // NewResult creates a new list of Result.
 func NewResult_List(s *capnp.Segment, sz int32) (Result_List, error) {
-	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 16, PointerCount: 0}, sz)
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 24, PointerCount: 0}, sz)
 	return capnp.StructList[Result](l), err
 }
 

@@ -8,4 +8,6 @@ struct Call {
     requestID @0 :UInt64;
     procedure @1 :Text;
     payloadSerializerID @2 :UInt64;
+    receiveProgress @3 :Bool;
+    progress @4 :Bool;
 }
