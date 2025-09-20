@@ -13,4 +13,6 @@ struct Invocation {
     callerAuthID @4 :Text;
     callerAuthRole @5 :Text;
     procedure @6 :Text;
+    receiveProgress @7 :Bool;
+    progress @8 :Bool;
 }

@@ -58,6 +58,14 @@ func (i *Invocation) Details() map[string]any {
 		setDetail(&details, "procedure", topic)
 	}
 
+	if i.gen.ReceiveProgress() {
+		setDetail(&details, "receive_progress", i.gen.ReceiveProgress())
+	}
+
+	if i.gen.Progress() {
+		setDetail(&details, "progress", i.gen.Progress())
+	}
+
 	return details
 }
 
@@ -86,6 +94,16 @@ func InvocationToCapnproto(m *messages.Invocation) ([]byte, error) {
 
 	invocation.SetRequestID(m.RequestID())
 	invocation.SetRegistrationID(m.RegistrationID())
+
+	receiveProgress, ok := m.Details()["receive_progress"].(bool)
+	if ok {
+		invocation.SetReceiveProgress(receiveProgress)
+	}
+
+	progress, ok := m.Details()["progress"].(bool)
+	if ok {
+		invocation.SetProgress(progress)
+	}
 
 	payloadSerializer := selectPayloadSerializer(m.Details())
 	invocation.SetPayloadSerializerID(payloadSerializer)

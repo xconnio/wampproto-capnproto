@@ -25,7 +25,12 @@ func (y *Yield) RequestID() uint64 {
 }
 
 func (y *Yield) Options() map[string]any {
-	return map[string]any{}
+	var options map[string]any
+	if y.gen.Progress() {
+		setDetail(&options, "progress", y.gen.Progress())
+	}
+
+	return options
 }
 
 func (y *Yield) Args() []any {
@@ -62,6 +67,11 @@ func YieldToCapnproto(m *messages.Yield) ([]byte, error) {
 	yield.SetRequestID(m.RequestID())
 	payloadSerializer := selectPayloadSerializer(m.Options())
 	yield.SetPayloadSerializerID(payloadSerializer)
+
+	progress, ok := m.Options()["progress"].(bool)
+	if ok {
+		yield.SetProgress(progress)
+	}
 
 	var payload []byte
 	if m.PayloadIsBinary() {

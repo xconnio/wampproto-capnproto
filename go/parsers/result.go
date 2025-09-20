@@ -25,7 +25,12 @@ func (r *Result) RequestID() uint64 {
 }
 
 func (r *Result) Details() map[string]any {
-	return map[string]any{}
+	var details map[string]any
+	if r.gen.Progress() {
+		setDetail(&details, "progress", r.gen.Progress())
+	}
+
+	return details
 }
 
 func (r *Result) Args() []any {
@@ -62,6 +67,10 @@ func ResultToCapnproto(m *messages.Result) ([]byte, error) {
 	result.SetRequestID(m.RequestID())
 	payloadSerializer := selectPayloadSerializer(m.Details())
 	result.SetPayloadSerializerID(payloadSerializer)
+	progress, ok := m.Details()["progress"].(bool)
+	if ok {
+		result.SetProgress(progress)
+	}
 
 	var payload []byte
 	if m.PayloadIsBinary() {
