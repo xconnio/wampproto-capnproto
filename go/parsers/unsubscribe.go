@@ -3,8 +3,8 @@ package parsers
 import (
 	"capnproto.org/go/capnp/v3"
 
+	"github.com/xconnio/wampproto-capnproto/go/gen"
 	"github.com/xconnio/wampproto-go/messages"
-	"github.com/xconnio/wampproto-serializer-capnproto/go/gen"
 )
 
 type Unsubscribe struct {

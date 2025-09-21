@@ -3,10 +3,10 @@ package wampprotocapnp
 import (
 	"fmt"
 
+	"github.com/xconnio/wampproto-capnproto/go/parsers"
 	"github.com/xconnio/wampproto-go/messages"
 	"github.com/xconnio/wampproto-go/serializers"
 	"github.com/xconnio/wampproto-go/transports"
-	"github.com/xconnio/wampproto-serializer-capnproto/go/parsers"
 )
 
 const (
