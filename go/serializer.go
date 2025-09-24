@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	CapnprotoSplitSerializerID transports.Serializer = 14
-	CapnprotoSplitSubProtocol                        = "wamp.2.capnproto.split_payload"
+	SplitSerializerID transports.Serializer = 14
+	SplitSubProtocol                        = "wamp.2.capnproto.split_payload"
 )
 
 type CapnprotoSerializer struct{}
